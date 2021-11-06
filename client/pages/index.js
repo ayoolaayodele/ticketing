@@ -1,7 +1,18 @@
-import React from 'react';
-
-const index = () => {
-  return <div>Landing page</div>;
+import buildClient from '../api/buildClient';
+const LandingPage = ({ currentUser }) => {
+  return currentUser ? (
+    <h1>You are signed in</h1>
+  ) : (
+    <h1>You are not signed in</h1>
+  );
 };
 
-export default index;
+//Rather than pulling off we refer to the first argument called context
+LandingPage.getInitialProps = async (context) => {
+  const client = buildClient(context);
+  const { data } = await client.get('/api/users/currentuser');
+
+  return data;
+};
+
+export default LandingPage;
