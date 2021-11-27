@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { Order, OrderStatus } from './order';
 
 interface TicketAttrs {
+  id: string;
   title: string;
   price: number;
 }
@@ -40,8 +41,14 @@ const ticketSchema = new mongoose.Schema(
 
 //The statics object us how we add a new object directly to the ticket model itself
 
+//So that it will be saved to the database without mongodb
+//randomly generating _id for me
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
-  return new Ticket(attrs);
+  return new Ticket({
+    _id: attrs.id,
+    title: attrs.title,
+    price: attrs.price,
+  });
 };
 // Run query to look at all orders.  Find an order where the ticket
 // is the ticket we just found *and* the orders status is *not* cancelled.
