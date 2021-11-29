@@ -63,6 +63,7 @@ router.post(
       //We put expiresAt as a string because all the information we pass
       //will eventually passed as JSON, if put date, it will turn to string
       id: order.id,
+      version: order.version,
       status: order.status,
       userId: order.userId,
       expiresAt: order.expiresAt.toISOString(), //How we get UTC timestamp zone/format
